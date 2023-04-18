@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:14.4-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: bookShelfDB # set a unique name for each project
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data # use a host-mounted volume instead of a named volume
