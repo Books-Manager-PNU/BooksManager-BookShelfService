@@ -1,0 +1,60 @@
+package com.example.booksManager.service.impl;
+
+import com.example.booksManager.dto.bookShelfBook.BookShelfBookRequestDto;
+import com.example.booksManager.dto.bookShelfBook.BookShelfBookResponseDto;
+import com.example.booksManager.entity.BookShelfBook;
+import com.example.booksManager.exception.WebException;
+import com.example.booksManager.mapper.BookShelfBookMapper;
+import com.example.booksManager.repository.BookShelfBookRepository;
+import com.example.booksManager.service.BookShelfBookService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class BookShelfBookServiceImpl implements BookShelfBookService {
+    private final BookShelfBookRepository bookShelfBookRepository;
+    private final BookShelfBookMapper bookShelfBookMapper;
+
+    @Override
+    public BookShelfBookResponseDto save(BookShelfBookRequestDto book) {
+        BookShelfBook newBookShelfBook = bookShelfBookMapper.toEntity(book);
+        return bookShelfBookMapper.toBookShelfBookResponseDto(bookShelfBookRepository.save(newBookShelfBook));
+    }
+
+    @Override
+    public List<BookShelfBookResponseDto> findAll() {
+        return bookShelfBookRepository.findAll()
+                .stream()
+                .map(bookShelfBookMapper::toBookShelfBookResponseDto)
+                .toList();
+    }
+
+    @Override
+    public BookShelfBookResponseDto findById(long id) {
+        BookShelfBook bookShelfBook = getExistingBookById(id);
+        return bookShelfBookMapper.toBookShelfBookResponseDto(bookShelfBookRepository.save(bookShelfBook));
+    }
+
+    @Override
+    public BookShelfBookResponseDto update(long id, BookShelfBookRequestDto bookDto) {
+        BookShelfBook bookShelfBook = getExistingBookById(id);
+        bookShelfBookMapper.updateEntity(bookDto, bookShelfBook);
+        bookShelfBookRepository.save(bookShelfBook);
+        return bookShelfBookMapper.toBookShelfBookResponseDto(bookShelfBook);
+    }
+
+    @Override
+    public void remove(long id) {
+        BookShelfBook bookShelfBook = getExistingBookById(id);
+        bookShelfBookRepository.delete(bookShelfBook);
+    }
+
+    private BookShelfBook getExistingBookById(long id) {
+        return bookShelfBookRepository.findById(id)
+                .orElseThrow(() -> new WebException(HttpStatus.NOT_FOUND, "BookShelfBook not found"));
+    }
+}
