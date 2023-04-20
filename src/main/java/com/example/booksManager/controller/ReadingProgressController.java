@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/bookshelves/books/reading-progresses")
+@RequestMapping("/api/bookshelf-book-reading-progresses")
 public class ReadingProgressController {
     private final ReadingProgressService readingProgressService;
 

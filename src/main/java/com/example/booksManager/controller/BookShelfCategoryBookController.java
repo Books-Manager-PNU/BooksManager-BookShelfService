@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/bookshelves/categories/books")
+@RequestMapping("/api/bookshelf-category-books")
 public class BookShelfCategoryBookController {
     private final BookShelfCategoryBookService bookShelfCategoryBookService;
 

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/bookshelves/favourites")
+@RequestMapping("/api/bookshelf-favourites")
 public class BookShelfFavouriteController {
     private final BookShelfFavouriteService bookShelfFavouriteService;
 

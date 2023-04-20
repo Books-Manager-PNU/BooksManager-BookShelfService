@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/bookshelves/categories")
+@RequestMapping("/api/bookshelf-categories")
 public class BookShelfCategoryController {
     private final BookShelfCategoryService bookShelfCategoryService;
 
