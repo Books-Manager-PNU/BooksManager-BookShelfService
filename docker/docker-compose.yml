@@ -1,12 +1,12 @@
 version: "3.8"
 services:
-  bookshelf_db:
+  books_manager_bookshelf_db:
     image: postgres:14.4-alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: bookshelf_db # set a unique name for each project
+      POSTGRES_DB: books_manager_bookshelf_db # set a unique name for each project
     ports:
       - '5432:5432'
     volumes:
