@@ -1,7 +1,5 @@
 package com.example.booksManager.controller;
 
-import com.example.booksManager.dto.bookShelfCategory.BookShelfCategoryRequestDto;
-import com.example.booksManager.dto.bookShelfCategory.BookShelfCategoryResponseDto;
 import com.example.booksManager.dto.bookShelfCategoryBook.BookShelfCategoryBookRequestDto;
 import com.example.booksManager.dto.bookShelfCategoryBook.BookShelfCategoryBookResponseDto;
 import com.example.booksManager.service.BookShelfCategoryBookService;
@@ -19,8 +17,11 @@ public class BookShelfCategoryBookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookShelfCategoryBookResponseDto addBookShelf(@RequestBody BookShelfCategoryBookRequestDto categoryBookDto) {
-        return bookShelfCategoryBookService.save(categoryBookDto);
+    public BookShelfCategoryBookResponseDto addBookShelf(
+            @RequestBody BookShelfCategoryBookRequestDto categoryBookDto,
+            @RequestParam("user") Long userId
+    ) {
+        return bookShelfCategoryBookService.save(categoryBookDto, userId);
     }
 
     @GetMapping
@@ -31,20 +32,23 @@ public class BookShelfCategoryBookController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookShelfCategoryBookResponseDto findById(@PathVariable long id) {
+    public BookShelfCategoryBookResponseDto findById(@PathVariable Long id) {
         return bookShelfCategoryBookService.findById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public BookShelfCategoryBookResponseDto updateBookShelfById(@PathVariable long id,
-                                                                @RequestBody BookShelfCategoryBookRequestDto categoryBookDto) {
-        return bookShelfCategoryBookService.update(id, categoryBookDto);
+    public BookShelfCategoryBookResponseDto updateBookShelfById(
+            @PathVariable Long id,
+            @RequestBody BookShelfCategoryBookRequestDto categoryBookDto,
+            @RequestParam("user") Long userId
+    ) {
+        return bookShelfCategoryBookService.update(id, categoryBookDto, userId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBookShelfById(@PathVariable long id) {
+    public void deleteBookShelfById(@PathVariable Long id) {
         bookShelfCategoryBookService.remove(id);
     }
 

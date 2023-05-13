@@ -17,8 +17,11 @@ public class BookShelfController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookShelfResponseDto addBookShelf(@RequestBody BookShelfRequestDto bookShelfDto) {
-        return bookShelfService.save(bookShelfDto);
+    public BookShelfResponseDto addBookShelf(
+            @RequestBody BookShelfRequestDto bookShelfDto,
+            @RequestParam("user") Long userId
+    ) {
+        return bookShelfService.save(bookShelfDto, userId);
     }
 
     @GetMapping
@@ -27,21 +30,31 @@ public class BookShelfController {
         return bookShelfService.findAll();
     }
 
+    @GetMapping("/testAPI")
+    @ResponseStatus(HttpStatus.OK)
+    public String testApiGatewayEndpoint() {
+        return "works fine! from bookshelf service";
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookShelfResponseDto findById(@PathVariable long id) {
+    public BookShelfResponseDto findById(@PathVariable Long id) {
         return bookShelfService.findById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public BookShelfResponseDto updateBookShelfById(@PathVariable long id, @RequestBody BookShelfRequestDto bookDto) {
-        return bookShelfService.update(id, bookDto);
+    public BookShelfResponseDto updateBookShelfById(
+            @PathVariable Long id,
+            @RequestBody BookShelfRequestDto bookDto,
+            @RequestParam("user") Long userId
+    ) {
+        return bookShelfService.update(id, bookDto, userId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBookShelfById(@PathVariable long id) {
+    public void deleteBookShelfById(@PathVariable Long id) {
         bookShelfService.remove(id);
     }
 

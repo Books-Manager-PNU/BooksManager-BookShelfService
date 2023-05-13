@@ -16,13 +16,13 @@ public class BookShelf {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "user_id", nullable = false)
-    private long userId;
+    private Long userId;
 
     @Column(name = "update_date", nullable = false)
     private LocalDateTime updateDate;

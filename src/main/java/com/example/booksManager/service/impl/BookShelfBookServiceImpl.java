@@ -20,40 +20,40 @@ public class BookShelfBookServiceImpl implements BookShelfBookService {
     private final BookShelfBookMapper bookShelfBookMapper;
 
     @Override
-    public BookShelfBookResponseDto save(BookShelfBookRequestDto book) {
+    public BookShelfBookResponseDto save(BookShelfBookRequestDto book, Long userId) {
         BookShelfBook newBookShelfBook = bookShelfBookMapper.toEntity(book);
-        return bookShelfBookMapper.toBookShelfBookResponseDto(bookShelfBookRepository.save(newBookShelfBook));
+        return bookShelfBookMapper.toResponseDto(bookShelfBookRepository.save(newBookShelfBook));
     }
 
     @Override
     public List<BookShelfBookResponseDto> findAll() {
         return bookShelfBookRepository.findAll()
                 .stream()
-                .map(bookShelfBookMapper::toBookShelfBookResponseDto)
+                .map(bookShelfBookMapper::toResponseDto)
                 .toList();
     }
 
     @Override
-    public BookShelfBookResponseDto findById(long id) {
+    public BookShelfBookResponseDto findById(Long id) {
         BookShelfBook bookShelfBook = getExistingBookById(id);
-        return bookShelfBookMapper.toBookShelfBookResponseDto(bookShelfBookRepository.save(bookShelfBook));
+        return bookShelfBookMapper.toResponseDto(bookShelfBookRepository.save(bookShelfBook));
     }
 
     @Override
-    public BookShelfBookResponseDto update(long id, BookShelfBookRequestDto bookDto) {
+    public BookShelfBookResponseDto update(Long id, BookShelfBookRequestDto bookDto, Long userId) {
         BookShelfBook bookShelfBook = getExistingBookById(id);
         bookShelfBookMapper.updateEntity(bookDto, bookShelfBook);
         bookShelfBookRepository.save(bookShelfBook);
-        return bookShelfBookMapper.toBookShelfBookResponseDto(bookShelfBook);
+        return bookShelfBookMapper.toResponseDto(bookShelfBook);
     }
 
     @Override
-    public void remove(long id) {
+    public void remove(Long id) {
         BookShelfBook bookShelfBook = getExistingBookById(id);
         bookShelfBookRepository.delete(bookShelfBook);
     }
 
-    private BookShelfBook getExistingBookById(long id) {
+    private BookShelfBook getExistingBookById(Long id) {
         return bookShelfBookRepository.findById(id)
                 .orElseThrow(() -> new WebException(HttpStatus.NOT_FOUND, "BookShelfBook not found"));
     }

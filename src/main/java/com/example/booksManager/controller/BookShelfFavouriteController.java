@@ -1,7 +1,5 @@
 package com.example.booksManager.controller;
 
-import com.example.booksManager.dto.bookShelf.BookShelfRequestDto;
-import com.example.booksManager.dto.bookShelf.BookShelfResponseDto;
 import com.example.booksManager.dto.bookshelfFavourite.BookShelfFavouriteRequestDto;
 import com.example.booksManager.dto.bookshelfFavourite.BookShelfFavouriteResponseDto;
 import com.example.booksManager.service.BookShelfFavouriteService;
@@ -19,8 +17,11 @@ public class BookShelfFavouriteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookShelfFavouriteResponseDto addBookShelf(@RequestBody BookShelfFavouriteRequestDto favouriteDto) {
-        return bookShelfFavouriteService.save(favouriteDto);
+    public BookShelfFavouriteResponseDto addBookShelf(
+            @RequestBody BookShelfFavouriteRequestDto favouriteDto,
+            @RequestParam("user") Long userId
+    ) {
+        return bookShelfFavouriteService.save(favouriteDto, userId);
     }
 
     @GetMapping
@@ -31,20 +32,23 @@ public class BookShelfFavouriteController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookShelfFavouriteResponseDto findById(@PathVariable long id) {
+    public BookShelfFavouriteResponseDto findById(@PathVariable Long id) {
         return bookShelfFavouriteService.findById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public BookShelfFavouriteResponseDto updateBookShelfById(@PathVariable long id,
-                                                             @RequestBody BookShelfFavouriteRequestDto favouriteDto) {
-        return bookShelfFavouriteService.update(id, favouriteDto);
+    public BookShelfFavouriteResponseDto updateBookShelfById(
+            @PathVariable Long id,
+            @RequestBody BookShelfFavouriteRequestDto favouriteDto,
+            @RequestParam("user") Long userId
+    ) {
+        return bookShelfFavouriteService.update(id, favouriteDto, userId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBookShelfById(@PathVariable long id) {
+    public void deleteBookShelfById(@PathVariable Long id) {
         bookShelfFavouriteService.remove(id);
     }
 

@@ -9,7 +9,8 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface BookShelfMapper {
-    BookShelfResponseDto toBookShelfResponseDto(BookShelf bookShelf);
+    BookShelfResponseDto toResponseDto(BookShelf bookShelf);
+
     BookShelf toEntity(BookShelfRequestDto bookShelf);
 
     @Mapping(target = "id", ignore = true)

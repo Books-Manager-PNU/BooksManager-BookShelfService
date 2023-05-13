@@ -1,7 +1,5 @@
 package com.example.booksManager.controller;
 
-import com.example.booksManager.dto.bookshelfFavourite.BookShelfFavouriteRequestDto;
-import com.example.booksManager.dto.bookshelfFavourite.BookShelfFavouriteResponseDto;
 import com.example.booksManager.dto.readingProgress.ReadingProgressRequestDto;
 import com.example.booksManager.dto.readingProgress.ReadingProgressResponseDto;
 import com.example.booksManager.service.ReadingProgressService;
@@ -19,8 +17,11 @@ public class ReadingProgressController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ReadingProgressResponseDto addBookShelf(@RequestBody ReadingProgressRequestDto readingProgressDto) {
-        return readingProgressService.save(readingProgressDto);
+    public ReadingProgressResponseDto addBookShelf(
+            @RequestBody ReadingProgressRequestDto readingProgressDto,
+            @RequestParam("user") Long userId
+    ) {
+        return readingProgressService.save(readingProgressDto, userId);
     }
 
     @GetMapping
@@ -31,20 +32,23 @@ public class ReadingProgressController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ReadingProgressResponseDto findById(@PathVariable long id) {
+    public ReadingProgressResponseDto findById(@PathVariable Long id) {
         return readingProgressService.findById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ReadingProgressResponseDto updateBookShelfById(@PathVariable long id,
-                                                             @RequestBody ReadingProgressRequestDto readingProgressDto) {
-        return readingProgressService.update(id, readingProgressDto);
+    public ReadingProgressResponseDto updateBookShelfById(
+            @PathVariable Long id,
+            @RequestBody ReadingProgressRequestDto readingProgressDto,
+            @RequestParam("user") Long userId
+    ) {
+        return readingProgressService.update(id, readingProgressDto, userId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBookShelfById(@PathVariable long id) {
+    public void deleteBookShelfById(@PathVariable Long id) {
         readingProgressService.remove(id);
     }
 

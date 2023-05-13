@@ -16,14 +16,14 @@ public class BookShelfBook {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "bookshelf_id", nullable = false)
     private BookShelf bookshelfId;
 
     @Column(name = "book_id", nullable = false)
-    private long bookId;
+    private Long bookId;
 
     @Column(name = "is_read", nullable = false)
     private boolean isRead;

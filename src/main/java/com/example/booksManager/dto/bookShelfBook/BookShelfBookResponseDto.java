@@ -1,8 +1,8 @@
 package com.example.booksManager.dto.bookShelfBook;
 
 public record BookShelfBookResponseDto(
-        long id,
-        long bookId,
-        long bookShelfId
+        Long id,
+        Long bookId,
+        Long bookShelfId
 ) {
 }

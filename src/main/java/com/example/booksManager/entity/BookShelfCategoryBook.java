@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "bookshelf_category_book", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "bookshelf_book_id", "bookshelf_category_id" })
+        @UniqueConstraint(columnNames = {"bookshelf_book_id", "bookshelf_category_id"})
 })
 public class BookShelfCategoryBook {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "bookshelf_book_id", nullable = false)

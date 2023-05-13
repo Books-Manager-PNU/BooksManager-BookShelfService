@@ -1,7 +1,7 @@
 package com.example.booksManager.dto.bookShelfCategory;
 
 public record BookShelfCategoryResponseDto(
-        long id,
+        Long id,
         String name
 ) {
 }

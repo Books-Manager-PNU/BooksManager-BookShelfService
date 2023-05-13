@@ -1,16 +1,12 @@
 package com.example.booksManager.service.impl;
 
-import com.example.booksManager.dto.bookShelf.BookShelfRequestDto;
-import com.example.booksManager.dto.bookShelf.BookShelfResponseDto;
 import com.example.booksManager.dto.bookShelfCategory.BookShelfCategoryRequestDto;
 import com.example.booksManager.dto.bookShelfCategory.BookShelfCategoryResponseDto;
-import com.example.booksManager.entity.BookShelf;
 import com.example.booksManager.entity.BookShelfCategory;
 import com.example.booksManager.exception.WebException;
 import com.example.booksManager.mapper.BookShelfCategoryMapper;
 import com.example.booksManager.repository.BookShelfCategoryRepository;
 import com.example.booksManager.service.BookShelfCategoryService;
-import com.example.booksManager.service.BookShelfService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,40 +20,40 @@ public class BookShelfCategoryServiceImpl implements BookShelfCategoryService {
     private final BookShelfCategoryMapper bookShelfCategoryMapper;
 
     @Override
-    public BookShelfCategoryResponseDto save(BookShelfCategoryRequestDto category) {
+    public BookShelfCategoryResponseDto save(BookShelfCategoryRequestDto category, Long userId) {
         BookShelfCategory newCategory = bookShelfCategoryMapper.toEntity(category);
-        return bookShelfCategoryMapper.toBookShelfCategoryResponseDto(bookShelfCategoryRepository.save(newCategory));
+        return bookShelfCategoryMapper.toResponseDto(bookShelfCategoryRepository.save(newCategory));
     }
 
     @Override
     public List<BookShelfCategoryResponseDto> findAll() {
         return bookShelfCategoryRepository.findAll()
                 .stream()
-                .map(bookShelfCategoryMapper::toBookShelfCategoryResponseDto)
+                .map(bookShelfCategoryMapper::toResponseDto)
                 .toList();
     }
 
     @Override
-    public BookShelfCategoryResponseDto findById(long id) {
+    public BookShelfCategoryResponseDto findById(Long id) {
         BookShelfCategory newCategory = getExistingBookById(id);
-        return bookShelfCategoryMapper.toBookShelfCategoryResponseDto(bookShelfCategoryRepository.save(newCategory));
+        return bookShelfCategoryMapper.toResponseDto(bookShelfCategoryRepository.save(newCategory));
     }
 
     @Override
-    public BookShelfCategoryResponseDto update(long id, BookShelfCategoryRequestDto category) {
+    public BookShelfCategoryResponseDto update(Long id, BookShelfCategoryRequestDto category, Long userId) {
         BookShelfCategory newCategory = getExistingBookById(id);
         bookShelfCategoryMapper.updateEntity(category, newCategory);
         bookShelfCategoryRepository.save(newCategory);
-        return bookShelfCategoryMapper.toBookShelfCategoryResponseDto(newCategory);
+        return bookShelfCategoryMapper.toResponseDto(newCategory);
     }
 
     @Override
-    public void remove(long id) {
+    public void remove(Long id) {
         BookShelfCategory newCategory = getExistingBookById(id);
         bookShelfCategoryRepository.delete(newCategory);
     }
 
-    private BookShelfCategory getExistingBookById(long id) {
+    private BookShelfCategory getExistingBookById(Long id) {
         return bookShelfCategoryRepository.findById(id)
                 .orElseThrow(() -> new WebException(HttpStatus.NOT_FOUND, "BookShelfCategory not found"));
     }

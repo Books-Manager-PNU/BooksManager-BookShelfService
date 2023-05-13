@@ -20,40 +20,40 @@ public class ReadingProgressServiceImpl implements ReadingProgressService {
     private final ReadingProgressMapper readingProgressMapper;
 
     @Override
-    public ReadingProgressResponseDto save(ReadingProgressRequestDto readingProgressDto) {
+    public ReadingProgressResponseDto save(ReadingProgressRequestDto readingProgressDto, Long userId) {
         ReadingProgress readingProgress = readingProgressMapper.toEntity(readingProgressDto);
-        return readingProgressMapper.toReadingProgressResponseDto(readingProgressRepository.save(readingProgress));
+        return readingProgressMapper.toResponseDto(readingProgressRepository.save(readingProgress));
     }
 
     @Override
     public List<ReadingProgressResponseDto> findAll() {
         return readingProgressRepository.findAll()
                 .stream()
-                .map(readingProgressMapper::toReadingProgressResponseDto)
+                .map(readingProgressMapper::toResponseDto)
                 .toList();
     }
 
     @Override
-    public ReadingProgressResponseDto findById(long id) {
-        ReadingProgress readingProgress = getExistingBookById(id);
-        return readingProgressMapper.toReadingProgressResponseDto(readingProgressRepository.save(readingProgress));
+    public ReadingProgressResponseDto findById(Long id) {
+        ReadingProgress readingProgress = getExistingReadingProgressById(id);
+        return readingProgressMapper.toResponseDto(readingProgressRepository.save(readingProgress));
     }
 
     @Override
-    public ReadingProgressResponseDto update(long id, ReadingProgressRequestDto readingProgressDto) {
-        ReadingProgress readingProgress = getExistingBookById(id);
+    public ReadingProgressResponseDto update(Long id, ReadingProgressRequestDto readingProgressDto, Long userId) {
+        ReadingProgress readingProgress = getExistingReadingProgressById(id);
         readingProgressMapper.updateEntity(readingProgressDto, readingProgress);
         readingProgressRepository.save(readingProgress);
-        return readingProgressMapper.toReadingProgressResponseDto(readingProgress);
+        return readingProgressMapper.toResponseDto(readingProgress);
     }
 
     @Override
-    public void remove(long id) {
-        ReadingProgress readingProgress = getExistingBookById(id);
+    public void remove(Long id) {
+        ReadingProgress readingProgress = getExistingReadingProgressById(id);
         readingProgressRepository.delete(readingProgress);
     }
 
-    private ReadingProgress getExistingBookById(long id) {
+    private ReadingProgress getExistingReadingProgressById(Long id) {
         return readingProgressRepository.findById(id)
                 .orElseThrow(() -> new WebException(HttpStatus.NOT_FOUND, "ReadingProgress not found"));
     }
