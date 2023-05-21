@@ -20,7 +20,7 @@ public class BookShelfCategoryBookServiceImpl implements BookShelfCategoryBookSe
     private final BookShelfCategoryBookMapper bookShelfCategoryBookMapper;
 
     @Override
-    public BookShelfCategoryBookResponseDto save(BookShelfCategoryBookRequestDto categoryBook, Long userId) {
+    public BookShelfCategoryBookResponseDto save(BookShelfCategoryBookRequestDto categoryBook) {
         BookShelfCategoryBook newCategoryBook = bookShelfCategoryBookMapper.toEntity(categoryBook);
         return bookShelfCategoryBookMapper.toResponseDto(bookShelfCategoryBookRepository.save(newCategoryBook));
     }
@@ -40,7 +40,7 @@ public class BookShelfCategoryBookServiceImpl implements BookShelfCategoryBookSe
     }
 
     @Override
-    public BookShelfCategoryBookResponseDto update(Long id, BookShelfCategoryBookRequestDto categoryBook, Long userId) {
+    public BookShelfCategoryBookResponseDto update(Long id, BookShelfCategoryBookRequestDto categoryBook) {
         BookShelfCategoryBook newCategoryBook = getExistingBookById(id);
         bookShelfCategoryBookMapper.updateEntity(categoryBook, newCategoryBook);
         bookShelfCategoryBookRepository.save(newCategoryBook);

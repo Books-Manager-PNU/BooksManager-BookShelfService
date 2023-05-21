@@ -20,7 +20,7 @@ public class ReadingProgressServiceImpl implements ReadingProgressService {
     private final ReadingProgressMapper readingProgressMapper;
 
     @Override
-    public ReadingProgressResponseDto save(ReadingProgressRequestDto readingProgressDto, Long userId) {
+    public ReadingProgressResponseDto save(ReadingProgressRequestDto readingProgressDto) {
         ReadingProgress readingProgress = readingProgressMapper.toEntity(readingProgressDto);
         return readingProgressMapper.toResponseDto(readingProgressRepository.save(readingProgress));
     }
@@ -40,7 +40,7 @@ public class ReadingProgressServiceImpl implements ReadingProgressService {
     }
 
     @Override
-    public ReadingProgressResponseDto update(Long id, ReadingProgressRequestDto readingProgressDto, Long userId) {
+    public ReadingProgressResponseDto update(Long id, ReadingProgressRequestDto readingProgressDto) {
         ReadingProgress readingProgress = getExistingReadingProgressById(id);
         readingProgressMapper.updateEntity(readingProgressDto, readingProgress);
         readingProgressRepository.save(readingProgress);

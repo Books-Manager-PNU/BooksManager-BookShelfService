@@ -5,6 +5,7 @@ import com.example.booksManager.dto.bookShelfBook.BookShelfBookResponseDto;
 import com.example.booksManager.service.BookShelfBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,40 +17,36 @@ public class BookShelfBookController {
     private final BookShelfBookService bookShelfBookService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public BookShelfBookResponseDto addBookShelfBook(
-            @RequestBody BookShelfBookRequestDto bookShelfBookDto,
-            @RequestParam("user") Long userId
+    public ResponseEntity<BookShelfBookResponseDto> add(
+            @RequestBody BookShelfBookRequestDto requestDto
     ) {
-        return bookShelfBookService.save(bookShelfBookDto, userId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(bookShelfBookService.save(requestDto));
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<BookShelfBookResponseDto> findAll() {
-        return bookShelfBookService.findAll();
+    public ResponseEntity<List<BookShelfBookResponseDto>> findAll() {
+        return ResponseEntity.ok(bookShelfBookService.findAll());
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public BookShelfBookResponseDto findById(@PathVariable Long id) {
-        return bookShelfBookService.findById(id);
+    public ResponseEntity<BookShelfBookResponseDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookShelfBookService.findById(id));
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public BookShelfBookResponseDto updateBookShelfById(
+    public ResponseEntity<BookShelfBookResponseDto> update(
             @PathVariable Long id,
-            @RequestBody BookShelfBookRequestDto bookShelfBookDto,
-            @RequestParam("user") Long userId
+            @RequestBody BookShelfBookRequestDto requestDto
     ) {
-        return bookShelfBookService.update(id, bookShelfBookDto, userId);
+        return ResponseEntity.accepted()
+                .body(bookShelfBookService.update(id, requestDto));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBookShelfById(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         bookShelfBookService.remove(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

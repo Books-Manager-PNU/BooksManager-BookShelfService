@@ -5,6 +5,7 @@ import com.example.booksManager.dto.bookshelfFavourite.BookShelfFavouriteRespons
 import com.example.booksManager.service.BookShelfFavouriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,40 +17,35 @@ public class BookShelfFavouriteController {
     private final BookShelfFavouriteService bookShelfFavouriteService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public BookShelfFavouriteResponseDto addBookShelf(
-            @RequestBody BookShelfFavouriteRequestDto favouriteDto,
-            @RequestParam("user") Long userId
+    public ResponseEntity<BookShelfFavouriteResponseDto> add(
+            @RequestBody BookShelfFavouriteRequestDto requestDto
     ) {
-        return bookShelfFavouriteService.save(favouriteDto, userId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(bookShelfFavouriteService.save(requestDto));
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<BookShelfFavouriteResponseDto> findAll() {
-        return bookShelfFavouriteService.findAll();
+    public ResponseEntity<List<BookShelfFavouriteResponseDto>> findAll() {
+        return ResponseEntity.ok(bookShelfFavouriteService.findAll());
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public BookShelfFavouriteResponseDto findById(@PathVariable Long id) {
-        return bookShelfFavouriteService.findById(id);
+    public ResponseEntity<BookShelfFavouriteResponseDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookShelfFavouriteService.findById(id));
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public BookShelfFavouriteResponseDto updateBookShelfById(
+    public ResponseEntity<BookShelfFavouriteResponseDto> update(
             @PathVariable Long id,
-            @RequestBody BookShelfFavouriteRequestDto favouriteDto,
-            @RequestParam("user") Long userId
+            @RequestBody BookShelfFavouriteRequestDto requestDto
     ) {
-        return bookShelfFavouriteService.update(id, favouriteDto, userId);
+        return ResponseEntity.accepted()
+                .body(bookShelfFavouriteService.update(id, requestDto));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBookShelfById(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         bookShelfFavouriteService.remove(id);
+        return ResponseEntity.noContent().build();
     }
-
 }

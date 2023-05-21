@@ -20,7 +20,7 @@ public class BookShelfBookServiceImpl implements BookShelfBookService {
     private final BookShelfBookMapper bookShelfBookMapper;
 
     @Override
-    public BookShelfBookResponseDto save(BookShelfBookRequestDto book, Long userId) {
+    public BookShelfBookResponseDto save(BookShelfBookRequestDto book) {
         BookShelfBook newBookShelfBook = bookShelfBookMapper.toEntity(book);
         return bookShelfBookMapper.toResponseDto(bookShelfBookRepository.save(newBookShelfBook));
     }
@@ -40,7 +40,7 @@ public class BookShelfBookServiceImpl implements BookShelfBookService {
     }
 
     @Override
-    public BookShelfBookResponseDto update(Long id, BookShelfBookRequestDto bookDto, Long userId) {
+    public BookShelfBookResponseDto update(Long id, BookShelfBookRequestDto bookDto) {
         BookShelfBook bookShelfBook = getExistingBookById(id);
         bookShelfBookMapper.updateEntity(bookDto, bookShelfBook);
         bookShelfBookRepository.save(bookShelfBook);

@@ -20,7 +20,7 @@ public class BookShelfFavouriteServiceImpl implements BookShelfFavouriteService 
     private final BookShelfFavouriteMapper bookShelfFavouriteMapper;
 
     @Override
-    public BookShelfFavouriteResponseDto save(BookShelfFavouriteRequestDto favourite, Long userId) {
+    public BookShelfFavouriteResponseDto save(BookShelfFavouriteRequestDto favourite) {
         BookShelfFavourite bookShelfFavourite = bookShelfFavouriteMapper.toEntity(favourite);
         return bookShelfFavouriteMapper.toResponseDto(bookShelfFavouriteRepository.save(bookShelfFavourite));
     }
@@ -40,7 +40,7 @@ public class BookShelfFavouriteServiceImpl implements BookShelfFavouriteService 
     }
 
     @Override
-    public BookShelfFavouriteResponseDto update(Long id, BookShelfFavouriteRequestDto favourite, Long userId) {
+    public BookShelfFavouriteResponseDto update(Long id, BookShelfFavouriteRequestDto favourite) {
         BookShelfFavourite bookShelfFavourite = getExistingBookById(id);
         bookShelfFavouriteMapper.updateEntity(favourite, bookShelfFavourite);
         bookShelfFavouriteRepository.save(bookShelfFavourite);
