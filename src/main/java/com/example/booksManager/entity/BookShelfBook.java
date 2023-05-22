@@ -18,9 +18,8 @@ public class BookShelfBook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "bookshelf_id", nullable = false)
-    private BookShelf bookshelfId;
+    @Column(name = "bookshelf_id", nullable = false)
+    private Long bookshelfId;
 
     @Column(name = "book_id", nullable = false)
     private Long bookId;

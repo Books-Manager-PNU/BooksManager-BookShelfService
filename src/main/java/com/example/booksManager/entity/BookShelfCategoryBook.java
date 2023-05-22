@@ -20,13 +20,12 @@ public class BookShelfCategoryBook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "bookshelf_book_id", nullable = false)
-    private BookShelfBook bookshelfBookId;
 
-    @ManyToOne
-    @JoinColumn(name = "bookshelf_category_id", nullable = false)
-    private BookShelfCategory bookShelfCategoryId;
+    @Column(name = "bookshelf_book_id", nullable = false)
+    private Long bookshelfBookId;
+
+    @Column(name = "bookshelf_category_id", nullable = false)
+    private Long bookShelfCategoryId;
 
     @Column(name = "update_date", nullable = false)
     private LocalDateTime updateDate;

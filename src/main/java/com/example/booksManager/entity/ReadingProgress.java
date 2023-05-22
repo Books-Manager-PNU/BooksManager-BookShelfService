@@ -20,9 +20,8 @@ public class ReadingProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "bookshelf_book_id", nullable = false)
-    private BookShelfBook bookshelfBookId;
+    @Column(name = "bookshelf_book_id", nullable = false)
+    private Long bookshelfBookId;
 
     @Column(name = "pages_read", nullable = false)
     private int pagesRead;
